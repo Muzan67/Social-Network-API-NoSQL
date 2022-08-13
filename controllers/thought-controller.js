@@ -13,7 +13,6 @@ const thoughtController = {
         });
     },
 
-
 //get one thought by id
 getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.thoughtId })
