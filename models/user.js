@@ -1,61 +1,50 @@
-const { Schema, model, Types } = require("mongoose");
-const dateFormat = require("../utils/dateFormat");
+const { Schema, model } = require("mongoose");
 
-const ReplySchema = new Schema(
+const UserSchema = new Schema(
   {
-    // set custom id to avoid confusion with parent comment _id
-    replyId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    replyBody: {
+    username: {
       type: String,
+      unique: true,
+      required: true,
+      trim: true,
     },
-    writtenBy: {
+    email: {
       type: String,
+      required: true,
+      unique: true,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please fill a valid email address",
+      ],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (createdAtVal) => dateFormat(createdAtVal),
-    },
-  },
-  {
-    toJSON: {
-      getters: true,
-    },
-  }
-);
-
-const CommentSchema = new Schema(
-  {
-    writtenBy: {
-      type: String,
-    },
-    commentBody: {
-      type: String,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (createdAtVal) => dateFormat(createdAtVal),
-    },
-    // use ReplySchema to validate data for a reply
-    replies: [ReplySchema],
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     toJSON: {
       virtuals: true,
       getters: true,
     },
+    // prevents virtuals from creating duplicate of _id as `id`
     id: false,
   }
 );
+// get total count of friends on retrieval
 
-CommentSchema.virtual("replyCount").get(function () {
-  return this.replies.length;
+UserSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
 });
 
-const Comment = model("Comment", CommentSchema);
+const User = model("User", UserSchema);
 
-module.exports = Comment;
+module.exports = User;
