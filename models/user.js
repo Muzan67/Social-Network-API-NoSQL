@@ -1,16 +1,16 @@
 const { Schema, model } = require("mongoose");
 
-const UserSchema = new Schema(
+const UserSchema = Schema(
   {
     username: {
       type: String,
       unique: true,
-      required: true,
+      required: "Insert your username! ",
       trim: true,
     },
     email: {
       type: String,
-      required: true,
+      required: "Insert your email address! ",
       unique: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -33,7 +33,6 @@ const UserSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
-      getters: true,
     },
     // prevents virtuals from creating duplicate of _id as `id`
     id: false,
