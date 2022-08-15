@@ -5,7 +5,7 @@ const userController = {
   getAllUsers(req, res) {
     User.find({})
       .select("-__v")
-      .sort({ _id: -1 })
+      .sort({ username: -1 })
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
         console.log(err);
@@ -15,7 +15,7 @@ const userController = {
 
   //get User by id
   getUserById({ params }, res) {
-    User.findOne({ _id: params.userId })
+    User.findOne({ _id: params.id })
       .populate({
         path: "thoughts",
         select: "-__v",
@@ -24,7 +24,7 @@ const userController = {
         path: "friends",
         select: "-__v",
       })
-      .select("-__v")
+      // .select("-__v")
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
         console.log(err);
@@ -33,8 +33,8 @@ const userController = {
   },
 
   // add user
-  addUser({ params, body }, res) {
-    console.log(params);
+  addUser({ body }, res) {
+    // console.log(params);
     User.create(body)
       .then((dbUserData) => {
         console.log(dbUserData);
@@ -62,8 +62,8 @@ const userController = {
 
   //update user
   updateUser({ params, body }, res) {
-    Thought.findOneAndUpdate(
-      { _id: params.userId },
+    User.findOneAndUpdate(
+      { _id: params.id },
       { $set: body },
       { new: true, runValidators: true }
     )
@@ -79,9 +79,9 @@ const userController = {
 
   //remove user
   removeUser({ params }, res) {
-    User.findOneAndDelete({ _id: params.userId })
-      .then((deletedUser) => {
-        if (!deletedUser) {
+    User.findOneAndDelete({ _id: params.id })
+      .then((dbUserData) => {
+        if (!dbUserData) {
           return res
             .status(404)
             .json({ message: "No user found with this id!" });
