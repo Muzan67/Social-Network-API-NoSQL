@@ -15,7 +15,7 @@ const thoughtController = {
 
   //get one thought by id
   getThoughtById({ params }, res) {
-    Thought.findOne({ _id: params.id })
+    Thought.findOne({ _id: params.thoughtid })
       .select("-__v")
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => {
@@ -25,14 +25,16 @@ const thoughtController = {
   },
 
   // add thought
-  addThought({ params }, res) {
-    Thought.findOne({ _id: params.id })
-      .select("-__v")
+  addThought({ params, body }, res) {
+    console.log(params);
+    Thought.create(body)
       .then((dbThoughtData) => {
-        if (!dbThoughtData) {
-          res.status(404).json({ message: "No thought found with this id!" });
-          return;
-        }
+        User.findOneAndUpdate(
+          { _id: params.userId },
+          { $push: { thoughts: dbThoughtData._id } },
+          { new: true, runValidators: true }
+        );
+        console.log(dbThoughtData);
         res.json(dbThoughtData);
       })
       .catch((err) => res.json(err));
@@ -41,7 +43,7 @@ const thoughtController = {
   //update thought
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate(
-      { _id: params.thoughtId },
+      { _id: params.thoughtid },
       { $set: body },
       { new: true, runValidators: true }
     )
@@ -57,9 +59,9 @@ const thoughtController = {
 
   //remove thought by id
   removeThought({ params }, res) {
-    Thought.findOneAndDelete({ _id: params.id })
-      .then((dbThoughtData) => {
-        if (!dbThoughtData) {
+    Thought.findOneAndDelete({ _id: params.thoughtid })
+      .then((deletedThought) => {
+        if (!deletedThought) {
           return res
             .status(404)
             .json({ message: "No thought found with this id!" });
@@ -72,7 +74,7 @@ const thoughtController = {
   addReaction({ params, body }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
-      { $addToSet: { reactions: body } },
+      { $push: { reactions: body } },
       { new: true, runValidators: true }
     )
       .then((dbThoughtData) => {
