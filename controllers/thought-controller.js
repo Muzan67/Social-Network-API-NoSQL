@@ -43,7 +43,7 @@ const thoughtController = {
   //update thought
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate(
-      { _id: params.thoughtid },
+      { _id: params.thoughtId },
       { $set: body },
       { new: true, runValidators: true }
     )
@@ -59,7 +59,7 @@ const thoughtController = {
 
   //remove thought by id
   removeThought({ params }, res) {
-    Thought.findOneAndDelete({ _id: params.thoughtid })
+    Thought.findOneAndDelete({ _id: params.thoughtId })
       .then((deletedThought) => {
         if (!deletedThought) {
           return res
