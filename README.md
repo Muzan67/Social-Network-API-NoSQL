@@ -60,7 +60,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 - MongoDB for Database
 - Express.js for routing
-- Mongoose ODMO (bject Data Modeling)
+- Mongoose ODM (Object Data Modeling)
 - MongoDB
 - Node
 - Insomnia
