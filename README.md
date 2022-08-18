@@ -2,7 +2,7 @@
 
 https://drive.google.com/file/d/1ib26WAcE57U6AKP9MtcKAryad9tyOTET/view?usp=sharing
 
-# Screen Castify Video of Social-Network-API-NoSQL - Thught & Reaction Routes
+# Screen Castify Video of Social-Network-API-NoSQL - Thought & Reaction Routes
 
 https://drive.google.com/file/d/1GTjEcfOs8it0Q-DWiMANvs_w2WcBl7Ji/view?usp=sharing
 
@@ -11,6 +11,7 @@ https://drive.google.com/file/d/1GTjEcfOs8it0Q-DWiMANvs_w2WcBl7Ji/view?usp=shari
 https://github.com/Muzan67/Social-Network-API-NoSQL
 
 # Social-Network-API-NoSQL
+
 # Desciption
 
 MongoDB is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. Over the last part of this course, you’ll use several of the technologies that social networking platforms use in their full-stack applications. Because the foundation of these applications is data, it’s important that you understand how to build and structure the API first.
@@ -18,7 +19,7 @@ MongoDB is a popular choice for many social networks due to its speed with large
 ## Table of Contents
 
 - Screen Castify Video of Social-Network-API-NoSQL - User & Friend Routes
-- Screen Castify Video of Social-Network-API-NoSQL - Thught & Reaction Routes
+- Screen Castify Video of Social-Network-API-NoSQL - Thought & Reaction Routes
 - Social-Network-API-NoSQL - Github Repository
 - Description
 - User Story
